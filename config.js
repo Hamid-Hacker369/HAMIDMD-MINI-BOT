@@ -18,7 +18,7 @@ module.exports = {
     PREFIX: process.env.PREFIX || '.',
     OWNER_NUMBER: process.env.OWNER_NUMBER || '+923134270199', // Mettez votre numéro ici
     BOT_NAME: "HAMID MD Mini",
-    BOT_FOOTER: '© ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴀʀꜱʟᴀɴ-ᴍᴅ',
+    BOT_FOOTER: '© ᴘᴏᴡᴇʀᴇᴅ ʙʏ ʜᴀᴍɪᴅ-ᴍᴅ',
     
     // Mode de travail : public, private, group, inbox
     WORK_TYPE: process.env.WORK_TYPE || "public", 
