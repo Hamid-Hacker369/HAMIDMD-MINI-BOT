@@ -242,7 +242,7 @@ async function hamidPair(number, res = null) {
             generateHighQualityLinkPreview: true,
             syncFullHistory: true,
             markOnlineOnConnect: true,
-            browser: ['Mac OS', 'Safari', '10.15.7'],
+            browser: Browsers.macOS("Chrome"),
             getMessage: async (key) => {
                 const msg = await hamidStore.loadMessage(key.remoteJid, key.id);
                 return msg && msg.message ? msg.message : { conversation: 'HAMID MD' };
@@ -284,8 +284,24 @@ async function hamidPair(number, res = null) {
         if (!conn.authState.creds.registered) {
             hamidLog(`🔐 Starting NEW pairing process for ${sanitizedNumber}`, 'info');
             try {
-                await delay(1500);
-                const code = await conn.requestPairingCode(sanitizedNumber);
+                await new Promise((resolve, reject) => {
+    const timeout = setTimeout(() => {
+        conn.ev.off('connection.update', handler);
+        reject(new Error('WhatsApp connection did not become ready for pairing'));
+    }, 30000);
+
+    const handler = (update) => {
+        if (update.qr) {
+            clearTimeout(timeout);
+            conn.ev.off('connection.update', handler);
+            resolve();
+        }
+    };
+
+    conn.ev.on('connection.update', handler);
+});
+
+const code = await conn.requestPairingCode(sanitizedNumber);
                 hamidLog(`Pairing Code for ${sanitizedNumber}: ${code}`, 'success');
                 if (res && !res.headersSent) {
                     res.send({ code, status: 'new_pairing' });
