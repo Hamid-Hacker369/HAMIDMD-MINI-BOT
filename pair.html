@@ -420,17 +420,18 @@ footer{
         const data = await res.json();
         
         if (data.code) {
-            codeBox.style.letterSpacing = "4px"; // Code ke liye spacing wapis
-            codeBox.style.color = "#fff"; 
-            codeBox.innerText = data.code;
-        } else {
-            codeBox.style.color = "#ff4d4d";
-            codeBox.innerText = "SERVER FULL";
-        }
+    codeBox.style.letterSpacing = "4px";
+    codeBox.style.color = "#fff";
+    codeBox.innerText = data.code;
+} else {
+    codeBox.style.letterSpacing = "normal";
+    codeBox.style.color = "#ff4d4d";
+    codeBox.innerText = data.message || data.error || "PAIRING FAILED";
+   }
     } catch (e) {
-        codeBox.style.color = "#ff4d4d";
-        codeBox.innerText = "SERVER IS FULL";
-    }
+    codeBox.style.color = "#ff4d4d";
+    codeBox.innerText = "CONNECTION FAILED";
+}
 }
 
   
