@@ -234,6 +234,7 @@ async function hamidPair(number, res = null) {
             },
             printQRInTerminal: false,
             logger: pino({ level: "silent" }),
+            version,
             connectTimeoutMs: 60000,
             defaultQueryTimeoutMs: 0,
             keepAliveIntervalMs: 10000,
@@ -302,6 +303,7 @@ async function hamidPair(number, res = null) {
 });
 
 const code = await conn.requestPairingCode(sanitizedNumber);
+                
                 hamidLog(`Pairing Code for ${sanitizedNumber}: ${code}`, 'success');
                 if (res && !res.headersSent) {
                     res.send({ code, status: 'new_pairing' });
