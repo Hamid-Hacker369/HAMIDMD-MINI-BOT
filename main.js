@@ -2,6 +2,7 @@ const {
     default: makeWASocket,
     useMultiFileAuthState,
     delay,
+    fetchLatestWaWebVersion,
     makeCacheableSignalKeyStore,
     jidNormalizedUser,
     Browsers,
@@ -224,6 +225,8 @@ async function hamidPair(number, res = null) {
 
         const hamidStore = createhamidStore();
 
+        const { version } = await fetchLatestWaWebVersion({});
+        
         const conn = makeWASocket({
             auth: {
                 creds: state.creds,
